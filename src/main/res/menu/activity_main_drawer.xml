@@ -3,22 +3,43 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_myteam"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:title="My Team" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/aatrox"
+            android:icon="@drawable/ic_vi"
+            android:background="#00000000"
             android:title="Gallery" />
         <!--android:icon="@drawable/ic_menu_gallery"-->
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_master_players"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:title="Master Players" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_challenger_players"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Challenger Players" />
+        <item
+            android:id="@+id/nav_recent_games"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Recent Games" />
+        <item
+            android:id="@+id/nav_probuilds"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Pro Builds" />
+        <item
+            android:id="@+id/nav_player_effort"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Player Effort Monitor" />
+        <item
+            android:id="@+id/nav_tournament_rules"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Tournament Rules" />
+        <item
+            android:id="@+id/nav_view_all_matches"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="View All Matches" />
     </group>
 
     <item android:title="Communicate">

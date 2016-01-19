@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp" >
+    <com.maxproj.simplewaveform.SimpleWaveform
+        android:id="@+id/player_effort_simplewaveform"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"/>
+    <TextView
+        android:id="@+id/player_effort_average_games_per_day_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Average games per day: "
+        android:layout_below="@id/player_effort_simplewaveform"/>
+    <TextView
+        android:id="@+id/player_effort_average_games_per_day_vale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/player_effort_average_games_per_day_key"/>
+    <TextView
+        android:id="@+id/player_effort_games_the_day_before_yesterday_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Games day before yesterday: "
+        android:layout_below="@id/player_effort_average_games_per_day_key"/>
+    <TextView
+        android:id="@+id/player_effort_games_the_day_before_yesterday_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/player_effort_games_the_day_before_yesterday_key"/>
+    <TextView
+        android:id="@+id/player_effort_games_yesterday_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Games yesterday: "
+        android:layout_below="@id/player_effort_games_the_day_before_yesterday_key"/>
+    <TextView
+        android:id="@+id/player_effort_games_yesterday_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/player_effort_games_yesterday_key"/>
+    <TextView
+        android:id="@+id/player_effort_games_played_today_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Games today so far"
+        android:layout_below="@id/player_effort_games_yesterday_key"/>
+    <TextView
+        android:id="@+id/player_effort_games_played_today_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/player_effort_games_played_today_key"/>
+</RelativeLayout>

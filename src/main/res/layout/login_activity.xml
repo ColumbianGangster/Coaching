@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/login_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/login_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Username"/>
+    <EditText
+        android:id="@+id/login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"/>
+    <CheckBox
+        android:id="@+id/login_remember_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remember me"/>
+    <Button
+        android:id="@+id/login_create_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create an account"/>
+    <Button
+        android:id="@+id/login_forgot_your_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Forgot your password"/>
+    <Button
+        android:id="@+id/login_with_gmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login with Gmail"/>
+
+</LinearLayout>

@@ -1,10 +1,9 @@
-package com.example.taefinalproject1;
+package com.example.taefinalproject1.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +11,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.example.taefinalproject1.R;
+import com.example.taefinalproject1.fragments.GalleryFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -22,6 +25,11 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+//        getSupportActionBar().
+//        if (actionBar != null) {
+//            //actionBar.setHomeAsUpIndicator(android.R.drawable.ic_);
+//            actionBar.setDisplayHomeAsUpEnabled(true);
+//        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -79,18 +87,26 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
+// TODO: 18/01/2016 Implement onNavigationItemSelected statements 
+        if (id == R.id.nav_challenger_players) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
+            GalleryFragment galleryFragment = new GalleryFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.main_fragment_container, galleryFragment).commit();
+        } else if (id == R.id.nav_master_players) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_myteam) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_player_effort) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_probuilds) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_recent_games){
+
+        } else if (id == R.id.nav_tournament_rules){
+
+        } else if (id == R.id.nav_view_all_matches){
 
         }
 
