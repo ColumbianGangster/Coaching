@@ -1,5 +1,6 @@
 package com.example.taefinalproject1.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -16,7 +17,7 @@ import android.view.View;
 import com.example.taefinalproject1.R;
 import com.example.taefinalproject1.fragments.GalleryFragment;
 
-public class MainActivity extends AppCompatActivity
+public class ParentActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -25,11 +26,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        getSupportActionBar().
-//        if (actionBar != null) {
-//            //actionBar.setHomeAsUpIndicator(android.R.drawable.ic_);
-//            actionBar.setDisplayHomeAsUpEnabled(true);
-//        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -93,11 +89,12 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             GalleryFragment galleryFragment = new GalleryFragment();
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_fragment_container, galleryFragment).commit();
+                    .replace(R.id.main_fragment_container, galleryFragment).commit();
         } else if (id == R.id.nav_master_players) {
 
         } else if (id == R.id.nav_myteam) {
-
+            Intent intent = new Intent(this, ScreenSlidePagerActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_player_effort) {
 
         } else if (id == R.id.nav_probuilds) {

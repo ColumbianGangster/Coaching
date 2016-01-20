@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.taefinalproject1"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -31,4 +31,5 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.maxproj.simplewaveform:app:1.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

@@ -27,7 +27,7 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        GridView gridview = (GridView) getActivity().findViewById(R.id.gridview);
+        GridView gridview = (GridView) getActivity().findViewById(R.id.gallery_gridview);
         gridview.setAdapter(new GalleryAdapter(getActivity()));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {

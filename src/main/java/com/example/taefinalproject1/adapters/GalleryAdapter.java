@@ -6,12 +6,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
+import com.example.taefinalproject1.R;
+import com.squareup.picasso.Picasso;
+
+import java.util.LinkedList;
+
 /**
  * Created by TAE_user2 on 15/01/2016.
  */
 public class GalleryAdapter extends BaseAdapter {
     private Context mContext;
     private Integer[] mThumbIds;
+    private LinkedList<Integer> tmp = new LinkedList<>();
     public GalleryAdapter(Context c) {
         mContext = c;
         this.mThumbIds = getmThumbIds();
@@ -41,15 +47,188 @@ public class GalleryAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
+        Picasso.with(mContext)
+                .load(mThumbIds[position])
+                .placeholder(R.drawable.place_holder)
+                .error(R.drawable.error)
+                .noFade().resize(150,150)
+                .centerCrop()
+                .into(imageView);
 
-        imageView.setImageResource(mThumbIds[position]);
+//        imageView.setImageResource(mThumbIds[position]);
         return imageView;
     }
 
     private Integer[] getmThumbIds(){
         // TODO: 18/01/2016 Implement thumbnailIds for Champion Selection Screen
-        Integer[] ret = new Integer[128];
-        int r = mContext.getResources().getIdentifier("res:drawable/aatrox", null, null);
+        LinkedList<String> lof = new LinkedList<>();
+        lof.add("aatrox");
+        lof.add("ahri");
+        lof.add("akali");
+        lof.add("alistar");
+        lof.add("amumu");
+        lof.add("anivia");
+        lof.add("annie");
+        lof.add("ashe");
+        ///////////////////
+        lof.add("blitzcrank");
+        lof.add("brand");
+        lof.add("braum");
+        ///////////////////
+        lof.add("caitlyn");
+        lof.add("cassiopeia");
+        lof.add("chogath");
+        lof.add("corki");
+        ///////////////////
+        lof.add("darius");
+        lof.add("diana");
+        lof.add("draven");
+        lof.add("drmundo");
+        ///////////////////
+        lof.add("ekko");
+        lof.add("elise");
+        lof.add("evelynn");
+        lof.add("ezreal");
+        ///////////////////
+        lof.add("fiddlesticks");
+        lof.add("fiora");
+        lof.add("fizz");
+        ///////////////////
+        lof.add("galio");
+        lof.add("gangplank");
+        lof.add("garen");
+        lof.add("gnar");
+        lof.add("gragas");
+        lof.add("graves");
+        ////////////////////
+        lof.add("hecarim");
+        lof.add("heimerdinger");
+        ////////////////////
+        lof.add("illaoi");
+        lof.add("irelia");
+        ////////////////////
+        lof.add("janna");
+        lof.add("javaniv");
+        lof.add("jax");
+        lof.add("jayce");
+        lof.add("jinx");
+        ////////////////////
+        lof.add("kalista");
+        lof.add("karma");
+        lof.add("karthus");
+        lof.add("kassadin");
+        lof.add("katarina");
+        lof.add("kayle");
+        lof.add("khazix");
+        lof.add("kindred");
+        lof.add("kogmaw");
+        ////////////////////
+        lof.add("leblanc");
+        lof.add("leesin");
+        lof.add("leona");
+        lof.add("lissandra");
+        lof.add("lucian");
+        lof.add("lulu");
+        lof.add("lux");
+        ////////////////////
+        lof.add("malphite");
+        lof.add("malzahar");
+        lof.add("maokai");
+        lof.add("masteryi");
+        lof.add("missfortune");
+        lof.add("monkeyking");
+        lof.add("mordekaiser");
+        ////////////////////
+        lof.add("nami");
+        lof.add("nasus");
+        lof.add("nautilus");
+        lof.add("nidalee");
+        lof.add("nocturne");
+        lof.add("nunu");
+        ////////////////////
+        lof.add("olaf");
+        lof.add("orianna");
+        ////////////////////
+        lof.add("pantheon");
+        lof.add("poppy");
+        ////////////////////
+        lof.add("quinn");
+        ////////////////////
+        lof.add("rammus");
+        lof.add("reksai");
+        lof.add("renekton");
+        lof.add("rengar");
+        lof.add("riven");
+        lof.add("rumble");
+        lof.add("ryze");
+        ////////////////////
+        lof.add("sejuani");
+        lof.add("shaco");
+        lof.add("shen");
+        lof.add("shyvana");
+        lof.add("singed");
+        lof.add("sion");
+        lof.add("sivir");
+        lof.add("skarner");
+        lof.add("sona");
+        lof.add("soraka");
+        lof.add("swain");
+        lof.add("syndra");
+        ////////////////////
+        lof.add("tahmkench");
+        lof.add("talon");
+        lof.add("taric");
+        lof.add("teemo");
+        lof.add("thresh");
+        lof.add("tristana");
+        lof.add("trundle");
+        lof.add("tryndamere");
+        lof.add("twistedfate");
+        lof.add("twitch");
+        ////////////////////
+        lof.add("udyr");
+        lof.add("urgot");
+        ////////////////////
+        lof.add("varus");
+        lof.add("vayne");
+        lof.add("veigar");
+        lof.add("velkoz");
+        lof.add("vi");
+        lof.add("viktor");
+        lof.add("vladimir");
+        lof.add("volibear");
+        ////////////////////
+        lof.add("warwick");
+        ////////////////////
+        lof.add("xerath");
+        lof.add("xinzhao");
+        ////////////////////
+        lof.add("yasuo");
+        lof.add("yorick");
+        ////////////////////
+        lof.add("zac");
+        lof.add("ziggs");
+        lof.add("zilean");
+        lof.add("zyra");
+        Integer[] ret = new Integer[lof.size()];
+
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = a(lof.get(i));
+        }
+
         return ret;
+    }
+    private Integer a(String filename){
+        return mContext.getResources().getIdentifier(filename, "drawable", mContext.getPackageName());
+    }
+    private void b(String filename){
+       tmp.add(a(filename));
+    }
+
+    // TODO: 19/01/2016 Use retrofit to get a list of filenames
+    private void c(LinkedList<String> listOfFilename){
+        for(String s : listOfFilename){
+            b(s);
+        }
     }
 }
