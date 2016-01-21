@@ -1,12 +1,14 @@
 package com.example.taefinalproject1.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.example.taefinalproject1.R;
+import com.example.taefinalproject1.constants.Constants;
 import com.squareup.picasso.Picasso;
 
 import java.util.LinkedList;
@@ -47,12 +49,13 @@ public class GalleryAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
         }
+        Log.i(Constants.TAG, "getView: "+mThumbIds[position]);
+        // TODO: 20/01/2016 java.lang.IllegalArgumentException: Resource ID must not be zero. appears at Irelia. 
         Picasso.with(mContext)
                 .load(mThumbIds[position])
                 .placeholder(R.drawable.place_holder)
                 .error(R.drawable.error)
-                .noFade().resize(150,150)
-                .centerCrop()
+//                .resize(100, 100).centerCrop()
                 .into(imageView);
 
 //        imageView.setImageResource(mThumbIds[position]);
@@ -108,7 +111,7 @@ public class GalleryAdapter extends BaseAdapter {
         lof.add("irelia");
         ////////////////////
         lof.add("janna");
-        lof.add("javaniv");
+        lof.add("jarvaniv");
         lof.add("jax");
         lof.add("jayce");
         lof.add("jinx");
@@ -214,6 +217,7 @@ public class GalleryAdapter extends BaseAdapter {
 
         for (int i = 0; i < ret.length; i++) {
             ret[i] = a(lof.get(i));
+            Log.i(Constants.TAG, "getmThumbIds: "+lof.get(i) + "'s id is: "+ret[i]);
         }
 
         return ret;

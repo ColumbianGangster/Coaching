@@ -5,4 +5,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="validation_name">Name must not be empty</string>
+    <string name="validation_name_length">Name have a minimum of 3 characters.</string>
+    <string name="validation_password">Password must not be empty.</string>
+    <string name="validation_name_length_toosmall">Length is too small</string>
+    <string name="validation_name_length_toobig">Length is too big</string>
+    <string name="validation_name_only_alphanumeric">Only a-z, A-Z, numbers. Also a maximum of two consecutive spaces are allowed.</string>
 </resources>
