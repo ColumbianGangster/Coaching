@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/register_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/register_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Username"/>
+    <EditText
+        android:id="@+id/register_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password"/>
+    <Button
+        android:id="@+id/register_create_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create an account"/>
+    <Button
+        android:id="@+id/register_with_gmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Register with Gmail instead"/>
+    <View
+        android:background="@color/Black"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter your league accounts: "/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Main Account"/>
+    <ImageButton
+        android:id="@+id/register_add_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/plus"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/register_edit_text_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+        <Button
+            android:id="@+id/register_accept_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+</LinearLayout>

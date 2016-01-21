@@ -1,5 +1,6 @@
 package com.example.taefinalproject1.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -45,8 +46,10 @@ public class LoginActivity extends AppCompatActivity {
     Button create_account;
 
     @OnClick(R.id.login_create_account) void createAccount(){
-        // TODO: 20/01/2016 Implement create account button 
-
+        Intent intent = new Intent(this, RegisterActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
     @OnClick(R.id.login_forgot_your_password) void forgotPassword(){
         // TODO: 20/01/2016 Implement forgot password button
@@ -63,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.login_activity);
         ButterKnife.bind(this);
         FormValidator.validate(this, new SimpleErrorPopupCallback(this));
     }
