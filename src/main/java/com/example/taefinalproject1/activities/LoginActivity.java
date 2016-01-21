@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText password;
     @Bind(R.id.login_remember_account)
     CheckBox rememberme;
+    // TODO: 21/01/2016 Login automatically implementation 
     @Bind(R.id.login_forgot_your_password)
     Button forgot_password;
     @Bind(R.id.login_with_gmail)

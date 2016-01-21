@@ -1,5 +1,6 @@
 package com.example.taefinalproject1.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
@@ -25,7 +26,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
     @OnClick(R.id.register_accept_button) void register(){
-        // TODO: 21/01/2016 Add registration functionality to the button 
+        // TODO: 21/01/2016 Add registration functionality to the button
+        Intent intent = new Intent(this, ParentActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 
     @Override
