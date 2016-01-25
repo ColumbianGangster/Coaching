@@ -8,6 +8,9 @@ import android.widget.LinearLayout;
 
 import com.example.taefinalproject1.R;
 
+import java.util.ArrayList;
+
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -17,18 +20,27 @@ import butterknife.OnClick;
 public class RegisterActivity extends AppCompatActivity {
 //    @Bind(R.id.register_add_edit_text)
 //    Button add_edit_text;
+    @Bind(R.id.register_mainaccount_edittext)
+    EditText mainAccount;
+    ArrayList<EditText> smurfs = new ArrayList<EditText>();
 
     @OnClick(R.id.register_add_edit_text) void add(){
         LinearLayout li = (LinearLayout) findViewById(R.id.register_edit_text_container);
         EditText et=new EditText(this);
         et.setText("Smurf account");
+        smurfs.add(et);
         li.addView(et);
-
     }
     @OnClick(R.id.register_accept_button) void register(){
         // TODO: 21/01/2016 Add registration functionality to the button
-        Intent intent = new Intent(this, ParentActivity.class);
+        Intent intent = new Intent(this, SplashScreenActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("mainaccount", mainAccount.getText().toString());
+        ArrayList<String> smurfAccounts = new ArrayList<>();
+        for(EditText e : smurfs){
+            smurfAccounts.add(e.getText().toString());
+        }
+        intent.putExtra("smurfs", smurfAccounts);
         startActivity(intent);
         finish();
     }

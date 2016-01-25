@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:text="Enter your league accounts: "/>
     <EditText
+        android:id="@+id/register_mainaccount_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Main Account"/>
