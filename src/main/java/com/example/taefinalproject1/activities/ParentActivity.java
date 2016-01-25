@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.example.taefinalproject1.R;
 import com.example.taefinalproject1.fragments.GalleryFragment;
+import com.example.taefinalproject1.fragments.MatchListFragment;
 
 public class ParentActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -104,7 +105,9 @@ public class ParentActivity extends AppCompatActivity
         } else if (id == R.id.nav_tournament_rules){
 
         } else if (id == R.id.nav_view_all_matches){
-
+            MatchListFragment matchListFragment = new MatchListFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment_container, matchListFragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

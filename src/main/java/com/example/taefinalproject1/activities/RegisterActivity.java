@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.taefinalproject1.R;
+import com.example.taefinalproject1.utils.MyPreferences;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,8 @@ public class RegisterActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("mainaccount", mainAccount.getText().toString());
         intent.putExtra("smurfs", smurfAccounts);
+        MyPreferences myPreferences = new MyPreferences();
+        myPreferences.savePreference("mainaccount", mainAccount.getText().toString(), this);
         startActivity(intent);
         finish();
     }

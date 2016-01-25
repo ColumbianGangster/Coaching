@@ -25,6 +25,6 @@ public interface IRest {
     public void getChampionIds(@Path("region") String region, @Query("api_key") String api_key, Callback<Championtoidmapping> response);
 
 //    @GET("/euw/v2.2/matchlist/by-summoner/42829492?rankedQueues=RANKED_SOLO_5x5&seasons=SEASON2016&api_key=cd659191-9c3a-4dd0-b352-b387a142bfc9")
-    @GET("/api/lol/{region}/v2.2/matchlist/by-summoner/{summonerId}")
+    @GET("/{region}/v2.2/matchlist/by-summoner/{summonerId}")
     public void getMatchList(@Path("region") String region, @Path("summonerId") String id, @Query("rankedQueues") String rankedQueues, @Query("seasons") String seasons,@Query("api_key") String api_key, Callback<MatchlistBySummoner> response);
 }

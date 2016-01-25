@@ -5,6 +5,10 @@
     <ImageView
         android:id="@+id/splash_screen_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        />
+
 
 </LinearLayout>

@@ -22,7 +22,7 @@ public class Match implements Parcelable
     private String platformId;
     @SerializedName("matchId")
     @Expose
-    private Integer matchId;
+    private Long matchId;
     @SerializedName("champion")
     @Expose
     private Integer champion;
@@ -34,7 +34,7 @@ public class Match implements Parcelable
     private String season;
     @SerializedName("timestamp")
     @Expose
-    private Integer timestamp;
+    private Long timestamp;
     @SerializedName("lane")
     @Expose
     private String lane;
@@ -48,11 +48,11 @@ public class Match implements Parcelable
             Match instance = new Match();
             instance.region = ((String) in.readValue((String.class.getClassLoader())));
             instance.platformId = ((String) in.readValue((String.class.getClassLoader())));
-            instance.matchId = ((Integer) in.readValue((Integer.class.getClassLoader())));
+            instance.matchId = ((Long) in.readValue((Long.class.getClassLoader())));
             instance.champion = ((Integer) in.readValue((Integer.class.getClassLoader())));
             instance.queue = ((String) in.readValue((String.class.getClassLoader())));
             instance.season = ((String) in.readValue((String.class.getClassLoader())));
-            instance.timestamp = ((Integer) in.readValue((Integer.class.getClassLoader())));
+            instance.timestamp = ((Long) in.readValue((Long.class.getClassLoader())));
             instance.lane = ((String) in.readValue((String.class.getClassLoader())));
             instance.role = ((String) in.readValue((String.class.getClassLoader())));
             return instance;
@@ -106,7 +106,7 @@ public class Match implements Parcelable
      * @return
      *     The matchId
      */
-    public Integer getMatchId() {
+    public Long getMatchId() {
         return matchId;
     }
 
@@ -115,7 +115,7 @@ public class Match implements Parcelable
      * @param matchId
      *     The matchId
      */
-    public void setMatchId(Integer matchId) {
+    public void setMatchId(Long matchId) {
         this.matchId = matchId;
     }
 
@@ -178,7 +178,7 @@ public class Match implements Parcelable
      * @return
      *     The timestamp
      */
-    public Integer getTimestamp() {
+    public Long getTimestamp() {
         return timestamp;
     }
 
@@ -187,7 +187,7 @@ public class Match implements Parcelable
      * @param timestamp
      *     The timestamp
      */
-    public void setTimestamp(Integer timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 

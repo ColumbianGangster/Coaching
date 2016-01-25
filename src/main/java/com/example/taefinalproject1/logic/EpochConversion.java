@@ -9,7 +9,7 @@ public class EpochConversion {
     /*
     Convert the League of Legends time stamp to a human readable Date.
      */
-    public Date convert(Integer timestamp){
-        return new Date(timestamp/1000);
+    public Date convert(Long timestamp){
+        return new Date(timestamp);
     }
 }

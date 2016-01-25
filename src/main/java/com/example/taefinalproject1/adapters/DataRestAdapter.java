@@ -6,10 +6,8 @@ import android.util.Log;
 import com.example.taefinalproject1.apis.IRest;
 import com.example.taefinalproject1.constants.Constants;
 import com.example.taefinalproject1.constants.RestConstants;
-import com.example.taefinalproject1.logic.EpochConversion;
 import com.example.taefinalproject1.models.championtoidmappings.Championtoidmapping;
 import com.example.taefinalproject1.models.nametoidmap.NameToIdMap;
-import com.example.taefinalproject1.models.summonermatchesbyseason.MatchlistBySummoner;
 import com.example.taefinalproject1.utils.MyPreferences;
 import com.example.taefinalproject1.utils.RetrofitErrorHandler;
 
@@ -20,7 +18,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Date;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -31,34 +28,35 @@ import retrofit.mime.TypedInput;
 /**
  * Created by TAE_user2 on 20/01/2016.
  */
-public class DataRestAdapter{
+public class DataRestAdapter {
     private IRest irest;
     private Context context;
 
-    public DataRestAdapter(Context context){
-        this.context=context;
+    public DataRestAdapter(Context context) {
+        this.context = context;
         makeRestAdapter(RestConstants.BASE_URL);
     }
 
-    public DataRestAdapter(Context context, Boolean global){
+    public DataRestAdapter(Context context, Boolean global) {
         this.context = context;
-        if(global){
+        if (global) {
             makeRestAdapter(RestConstants.GLOBAL_BASE_URL);
-        }
-        else {
+        } else {
             makeRestAdapter(RestConstants.BASE_URL);
         }
     }
-    private void makeRestAdapter(String base_url){
+
+    public IRest makeRestAdapter(String base_url) {
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(base_url)
                 .build();
         irest = restAdapter.create(IRest.class);
+        return irest;
     }
 
-    public void getIdBySummonerName(String region, String summonerName, String api_key){
-        irest.getIdBySummonerName(region, summonerName, api_key,new Callback<NameToIdMap>() {
+    public void getIdBySummonerName(String region, String summonerName, String api_key) {
+        irest.getIdBySummonerName(region, summonerName, api_key, new Callback<NameToIdMap>() {
             @Override
             public void success(NameToIdMap nameToIdMap, Response response) {
                 TypedInput input = response.getBody(); // get JSON as byte array
@@ -71,17 +69,18 @@ public class DataRestAdapter{
                 int id = myGetID(innerjsonobj);
                 Log.i(Constants.TAG, "success: name is " + name + " id is " + id);
                 MyPreferences mypreferences = new MyPreferences();
-                Log.i(Constants.TAG, "success: "+mypreferences.retrieveIntPreference("Riven", context));
+                Log.i(Constants.TAG, "success: " + mypreferences.retrieveIntPreference("Riven", context));
                 mypreferences.savePreference(name, id, context);
                 Log.i(Constants.TAG, "success: Reached success");
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Log.i(Constants.TAG, "failure: "+ error);
+                Log.i(Constants.TAG, "failure: " + error);
                 RetrofitErrorHandler reh = new RetrofitErrorHandler(context, error);
             }
-            private String myGetName(JSONObject jsonobj){
+
+            private String myGetName(JSONObject jsonobj) {
                 try {
                     return jsonobj.getString("name");
                 } catch (JSONException e) {
@@ -91,7 +90,8 @@ public class DataRestAdapter{
                 Log.i(Constants.TAG, "myGetName: Should not reach here");
                 return null;
             }
-            private int myGetID(JSONObject jsonobj){
+
+            private int myGetID(JSONObject jsonobj) {
                 try {
                     return jsonobj.getInt("id");
                 } catch (JSONException e) {
@@ -101,7 +101,8 @@ public class DataRestAdapter{
                 Log.i(Constants.TAG, "myGetID: Should not reach here");
                 return -9999;
             }
-            private String myToString(TypedInput typedInput){
+
+            private String myToString(TypedInput typedInput) {
                 BufferedReader reader = null;
                 StringBuilder out = null;
                 try {
@@ -113,14 +114,15 @@ public class DataRestAdapter{
                         out.append(line);
                         out.append(newLine);
                     }
-                    Log.i(Constants.TAG, "success: "+ out.toString());
+                    Log.i(Constants.TAG, "success: " + out.toString());
                 } catch (IOException e) {
                     Log.i(Constants.TAG, "myToString: Exception");
                     e.printStackTrace();
                 }
                 return out.toString();
             }
-            private JSONObject myToJSONObject(String json){
+
+            private JSONObject myToJSONObject(String json) {
                 JSONObject j = null;
                 try {
                     j = new JSONObject(json);
@@ -130,7 +132,8 @@ public class DataRestAdapter{
                 }
                 return j;
             }
-            private JSONArray myToJSONArray(String json){
+
+            private JSONArray myToJSONArray(String json) {
                 JSONArray jsonarr = null;
                 try {
                     jsonarr = new JSONArray(json);
@@ -140,7 +143,8 @@ public class DataRestAdapter{
                 }
                 return jsonarr;
             }
-            private JSONObject myGetFirst(JSONArray jsonarr){
+
+            private JSONObject myGetFirst(JSONArray jsonarr) {
                 try {
                     return jsonarr.getJSONObject(0);
                 } catch (JSONException e) {
@@ -149,13 +153,14 @@ public class DataRestAdapter{
                 }
                 return null;
             }
-            private JSONObject myInnerJSONObj(JSONObject j){
+
+            private JSONObject myInnerJSONObj(JSONObject j) {
                 JSONObject p = null;
                 try {
                     Object o = j.get(j.keys().next());
                     p = (JSONObject) o;
-                    Log.i(Constants.TAG, "successP: "+p.get("name"));
-                    Log.i(Constants.TAG, "successP: " +p.get("id"));
+                    Log.i(Constants.TAG, "successP: " + p.get("name"));
+                    Log.i(Constants.TAG, "successP: " + p.get("id"));
                 } catch (JSONException e) {
                     Log.i(Constants.TAG, "myInnerJSONObj: Exception");
                     e.printStackTrace();
@@ -165,7 +170,7 @@ public class DataRestAdapter{
         });
     }
 
-    public void getChampionToIdMappings(String region, String api_key){
+    public void getChampionToIdMappings(String region, String api_key) {
         irest.getChampionIds(region, api_key, new Callback<Championtoidmapping>() {
             @Override
             public void success(Championtoidmapping championtoidmapping, Response response) {
@@ -556,6 +561,390 @@ public class DataRestAdapter{
                 mypreferences.savePreference(championtoidmapping.getData().getZyra()
                         .getName(), championtoidmapping.getData().getZyra()
                         .getId(), context);
+
+                ///////////////////////////////////////////////////////////////////////////
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getAatrox
+                        ().getId()), championtoidmapping.getData().getAatrox
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getAhri
+                        ().getId()), championtoidmapping.getData().getAhri
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getAkali
+                        ().getId()), championtoidmapping.getData().getAkali
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getAlistar
+                        ().getId()), championtoidmapping.getData().getAlistar
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getAmumu
+                        ().getId()), championtoidmapping.getData().getAmumu
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getAnivia
+                        ().getId()), championtoidmapping.getData().getAnivia
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getAnnie
+                        ().getId()), championtoidmapping.getData().getAnnie
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getAshe
+                        ().getId()), championtoidmapping.getData().getAshe
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getAzir
+                        ().getId()), championtoidmapping.getData().getAzir
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getBard
+                        ().getId()), championtoidmapping.getData().getBard
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getBlitzcrank
+                        ().getId()), championtoidmapping.getData().getBlitzcrank
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getBrand
+                        ().getId()), championtoidmapping.getData().getBrand
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getBraum
+                        ().getId()), championtoidmapping.getData().getBraum
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getCaitlyn
+                        ().getId()), championtoidmapping.getData().getCaitlyn
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getCassiopeia
+                        ().getId()), championtoidmapping.getData().getCassiopeia
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getChogath
+                        ().getId()), championtoidmapping.getData().getChogath
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getCorki
+                        ().getId()), championtoidmapping.getData().getCorki
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getDarius
+                        ().getId()), championtoidmapping.getData().getDarius
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getDiana
+                        ().getId()), championtoidmapping.getData().getDiana
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getDraven
+                        ().getId()), championtoidmapping.getData().getDraven
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getDrMundo
+                        ().getId()), championtoidmapping.getData().getDrMundo
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getEkko
+                        ().getId()), championtoidmapping.getData().getEkko
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getElise
+                        ().getId()), championtoidmapping.getData().getElise
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getEvelynn
+                        ().getId()), championtoidmapping.getData().getEvelynn
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getEzreal
+                        ().getId()), championtoidmapping.getData().getEzreal
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getFiddleSticks
+                        ().getId()), championtoidmapping.getData().getFiddleSticks
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getFiora
+                        ().getId()), championtoidmapping.getData().getFiora
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getFizz
+                        ().getId()), championtoidmapping.getData().getFizz
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getGalio
+                        ().getId()), championtoidmapping.getData().getGalio
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getGangplank
+                        ().getId()), championtoidmapping.getData().getGangplank
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getGaren
+                        ().getId()), championtoidmapping.getData().getGaren
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getGnar
+                        ().getId()), championtoidmapping.getData().getGnar
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getGragas
+                        ().getId()), championtoidmapping.getData().getGragas
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getGraves
+                        ().getId()), championtoidmapping.getData().getGraves
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getHecarim
+                        ().getId()), championtoidmapping.getData().getHecarim
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getHeimerdinger
+                        ().getId()), championtoidmapping.getData().getHeimerdinger
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getIllaoi
+                        ().getId()), championtoidmapping.getData().getIllaoi
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getIrelia
+                        ().getId()), championtoidmapping.getData().getIrelia
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getJanna
+                        ().getId()), championtoidmapping.getData().getJanna
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getJarvanIV
+                        ().getId()), championtoidmapping.getData().getJarvanIV
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getJax
+                        ().getId()), championtoidmapping.getData().getJax
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getJayce
+                        ().getId()), championtoidmapping.getData().getJayce
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getJinx
+                        ().getId()), championtoidmapping.getData().getJinx
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getKalista
+                        ().getId()), championtoidmapping.getData().getKalista
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getKarma
+                        ().getId()), championtoidmapping.getData().getKarma
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getKarthus
+                        ().getId()), championtoidmapping.getData().getKarthus
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getKassadin
+                        ().getId()), championtoidmapping.getData().getKassadin
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getKatarina
+                        ().getId()), championtoidmapping.getData().getKatarina
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getKayle
+                        ().getId()), championtoidmapping.getData().getKayle
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getKennen
+                        ().getId()), championtoidmapping.getData().getKennen
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getKhazix
+                        ().getId()), championtoidmapping.getData().getKhazix
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getKindred
+                        ().getId()), championtoidmapping.getData().getKindred
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getKogMaw
+                        ().getId()), championtoidmapping.getData().getKogMaw
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getLeblanc
+                        ().getId()), championtoidmapping.getData().getLeblanc
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getLeeSin
+                        ().getId()), championtoidmapping.getData().getLeeSin
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getLeona
+                        ().getId()), championtoidmapping.getData().getLeona
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getLissandra
+                        ().getId()), championtoidmapping.getData().getLissandra
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getLucian
+                        ().getId()), championtoidmapping.getData().getLucian
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getLulu
+                        ().getId()), championtoidmapping.getData().getLulu
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getLux
+                        ().getId()), championtoidmapping.getData().getLux
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getMalphite
+                        ().getId()), championtoidmapping.getData().getMalphite
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getMalzahar
+                        ().getId()), championtoidmapping.getData().getMalzahar
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getMaokai
+                        ().getId()), championtoidmapping.getData().getMaokai
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getMasterYi
+                        ().getId()), championtoidmapping.getData().getMasterYi
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getMissFortune
+                        ().getId()), championtoidmapping.getData().getMissFortune
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getMonkeyKing
+                        ().getId()), championtoidmapping.getData().getMonkeyKing
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getMordekaiser
+                        ().getId()), championtoidmapping.getData().getMordekaiser
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getMorgana
+                        ().getId()), championtoidmapping.getData().getMorgana
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getNami
+                        ().getId()), championtoidmapping.getData().getNami
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getNasus
+                        ().getId()), championtoidmapping.getData().getNasus
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getNautilus
+                        ().getId()), championtoidmapping.getData().getNautilus
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getNidalee
+                        ().getId()), championtoidmapping.getData().getNidalee
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getNocturne
+                        ().getId()), championtoidmapping.getData().getNocturne
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getNunu
+                        ().getId()), championtoidmapping.getData().getNunu
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getOlaf
+                        ().getId()), championtoidmapping.getData().getOlaf
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getOrianna
+                        ().getId()), championtoidmapping.getData().getOrianna
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getPantheon
+                        ().getId()), championtoidmapping.getData().getPantheon
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getPoppy
+                        ().getId()), championtoidmapping.getData().getPoppy
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getQuinn
+                        ().getId()), championtoidmapping.getData().getQuinn
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getRammus
+                        ().getId()), championtoidmapping.getData().getRammus
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getRekSai
+                        ().getId()), championtoidmapping.getData().getRekSai
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getRenekton
+                        ().getId()), championtoidmapping.getData().getRenekton
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getRengar
+                        ().getId()), championtoidmapping.getData().getRengar
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getRiven
+                        ().getId()), championtoidmapping.getData().getRiven
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getRumble
+                        ().getId()), championtoidmapping.getData().getRumble
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getRyze
+                        ().getId()), championtoidmapping.getData().getRyze
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getSejuani
+                        ().getId()), championtoidmapping.getData().getSejuani
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getShaco
+                        ().getId()), championtoidmapping.getData().getShaco
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getShen
+                        ().getId()), championtoidmapping.getData().getShen
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getShyvana
+                        ().getId()), championtoidmapping.getData().getShyvana
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getSinged
+                        ().getId()), championtoidmapping.getData().getSinged
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getSion
+                        ().getId()), championtoidmapping.getData().getSion
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getSivir
+                        ().getId()), championtoidmapping.getData().getSivir
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getSkarner
+                        ().getId()), championtoidmapping.getData().getSkarner
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getSona
+                        ().getId()), championtoidmapping.getData().getSona
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getSoraka
+                        ().getId()), championtoidmapping.getData().getSoraka
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getSwain
+                        ().getId()), championtoidmapping.getData().getSwain
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getSyndra
+                        ().getId()), championtoidmapping.getData().getSyndra
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getTahmKench
+                        ().getId()), championtoidmapping.getData().getTahmKench
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getTalon
+                        ().getId()), championtoidmapping.getData().getTalon
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getTaric
+                        ().getId()), championtoidmapping.getData().getTaric
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getTeemo
+                        ().getId()), championtoidmapping.getData().getTeemo
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getThresh
+                        ().getId()), championtoidmapping.getData().getThresh
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getTristana
+                        ().getId()), championtoidmapping.getData().getTristana
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getTrundle
+                        ().getId()), championtoidmapping.getData().getTrundle
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getTryndamere
+                        ().getId()), championtoidmapping.getData().getTryndamere
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getTwistedFate
+                        ().getId()), championtoidmapping.getData().getTwistedFate
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getTwitch
+                        ().getId()), championtoidmapping.getData().getTwitch
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getUdyr
+                        ().getId()), championtoidmapping.getData().getUdyr
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getUrgot
+                        ().getId()), championtoidmapping.getData().getUrgot
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getVarus
+                        ().getId()), championtoidmapping.getData().getVarus
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getVayne
+                        ().getId()), championtoidmapping.getData().getVayne
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getVeigar
+                        ().getId()), championtoidmapping.getData().getVeigar
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getVelkoz
+                        ().getId()), championtoidmapping.getData().getVelkoz
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getVi
+                        ().getId()), championtoidmapping.getData().getVi
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getViktor
+                        ().getId()), championtoidmapping.getData().getViktor
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getVladimir
+                        ().getId()), championtoidmapping.getData().getVladimir
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getVolibear
+                        ().getId()), championtoidmapping.getData().getVolibear
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getWarwick
+                        ().getId()), championtoidmapping.getData().getWarwick
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getXerath
+                        ().getId()), championtoidmapping.getData().getXerath
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getXinZhao
+                        ().getId()), championtoidmapping.getData().getXinZhao
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getYasuo
+                        ().getId()), championtoidmapping.getData().getYasuo
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getYorick
+                        ().getId()), championtoidmapping.getData().getYorick
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getZac
+                        ().getId()), championtoidmapping.getData().getZac
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getZed
+                        ().getId()), championtoidmapping.getData().getZed
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getZiggs
+                        ().getId()), championtoidmapping.getData().getZiggs
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getZilean
+                        ().getId()), championtoidmapping.getData().getZilean
+                        ().getName(), context);
+                mypreferences.savePreference(Integer.toString(championtoidmapping.getData().getZyra().getId()), championtoidmapping.getData().getZyra().getName(), context);
             }
 
             @Override
