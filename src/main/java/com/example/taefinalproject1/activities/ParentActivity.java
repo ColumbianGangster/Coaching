@@ -17,6 +17,7 @@ import android.view.View;
 import com.example.taefinalproject1.R;
 import com.example.taefinalproject1.fragments.GalleryFragment;
 import com.example.taefinalproject1.fragments.MatchListFragment;
+import com.example.taefinalproject1.fragments.PlayerEffortFragment;
 
 public class ParentActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -97,6 +98,9 @@ public class ParentActivity extends AppCompatActivity
             Intent intent = new Intent(this, ScreenSlidePagerActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_player_effort) {
+            PlayerEffortFragment playerEffortFragment = new PlayerEffortFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment_container, playerEffortFragment).commit();
 
         } else if (id == R.id.nav_probuilds) {
 

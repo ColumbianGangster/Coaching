@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.login_create_account) void createAccount(){
         Intent intent = new Intent(this, RegisterActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }

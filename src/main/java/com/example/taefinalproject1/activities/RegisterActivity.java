@@ -40,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(this, SplashScreenActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("mainaccount", mainAccount.getText().toString());
         intent.putExtra("smurfs", smurfAccounts);
         MyPreferences myPreferences = new MyPreferences();

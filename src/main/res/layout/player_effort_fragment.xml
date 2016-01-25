@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent">
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:paddingLeft="16dp"
     android:paddingRight="16dp" >
-    <com.maxproj.simplewaveform.SimpleWaveform
-        android:id="@+id/player_effort_simplewaveform"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_margin="10dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"/>
+        android:id="@+id/parent_layout"
+        android:layout_height="match_parent"/>
     <TextView
         android:id="@+id/player_effort_average_games_per_day_key"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Average games per day: "
-        android:layout_below="@id/player_effort_simplewaveform"/>
+        android:layout_below="@id/parent_layout"
+        />
     <TextView
         android:id="@+id/player_effort_average_games_per_day_vale"
         android:layout_width="wrap_content"
@@ -56,3 +62,4 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/player_effort_games_played_today_key"/>
 </RelativeLayout>
+</LinearLayout>
