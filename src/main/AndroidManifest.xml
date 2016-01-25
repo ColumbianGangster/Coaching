@@ -24,11 +24,11 @@
         <activity android:name=".activities.ScreenSlidePagerActivity">
 
         </activity>
+        <activity android:name=".activities.SplashScreenActivity"></activity>
         <service android:name=".services.MyService"
             android:exported="false"/>
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="b17e6e8fd649f2c9a075083773c253cb31f8f23b" />
     </application>
-
 </manifest>

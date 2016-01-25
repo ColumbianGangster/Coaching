@@ -4,7 +4,7 @@ package com.example.taefinalproject1.models.nametoidmap;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Nobody42 {
+public class Player {
 
     @SerializedName("id")
     @Expose
@@ -20,7 +20,7 @@ public class Nobody42 {
     private Integer summonerLevel;
     @SerializedName("revisionDate")
     @Expose
-    private Integer revisionDate;
+    private Long revisionDate;
 
     /**
      * 
@@ -99,7 +99,7 @@ public class Nobody42 {
      * @return
      *     The revisionDate
      */
-    public Integer getRevisionDate() {
+    public Long getRevisionDate() {
         return revisionDate;
     }
 
@@ -108,7 +108,7 @@ public class Nobody42 {
      * @param revisionDate
      *     The revisionDate
      */
-    public void setRevisionDate(Integer revisionDate) {
+    public void setRevisionDate(Long revisionDate) {
         this.revisionDate = revisionDate;
     }
 

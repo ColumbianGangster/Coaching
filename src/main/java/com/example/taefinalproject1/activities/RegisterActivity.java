@@ -33,13 +33,14 @@ public class RegisterActivity extends AppCompatActivity {
     }
     @OnClick(R.id.register_accept_button) void register(){
         // TODO: 21/01/2016 Add registration functionality to the button
-        Intent intent = new Intent(this, SplashScreenActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.putExtra("mainaccount", mainAccount.getText().toString());
         ArrayList<String> smurfAccounts = new ArrayList<>();
         for(EditText e : smurfs){
             smurfAccounts.add(e.getText().toString());
         }
+
+        Intent intent = new Intent(this, SplashScreenActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("mainaccount", mainAccount.getText().toString());
         intent.putExtra("smurfs", smurfAccounts);
         startActivity(intent);
         finish();

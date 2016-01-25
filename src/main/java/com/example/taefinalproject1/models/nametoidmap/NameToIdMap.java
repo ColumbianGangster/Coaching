@@ -6,26 +6,26 @@ import com.google.gson.annotations.SerializedName;
 
 public class NameToIdMap {
 
-    @SerializedName("nobody42")
+    @SerializedName("player")
     @Expose
-    private Nobody42 nobody42;
+    private Player player;
 
     /**
      * 
      * @return
-     *     The nobody42
+     *     The player
      */
-    public Nobody42 getNobody42() {
-        return nobody42;
+    public Player getPlayer() {
+        return player;
     }
 
     /**
      * 
-     * @param nobody42
-     *     The nobody42
+     * @param player
+     *     The player
      */
-    public void setNobody42(Nobody42 nobody42) {
-        this.nobody42 = nobody42;
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
 }

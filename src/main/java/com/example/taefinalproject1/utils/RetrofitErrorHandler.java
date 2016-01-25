@@ -1,7 +1,10 @@
 package com.example.taefinalproject1.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.example.taefinalproject1.constants.Constants;
 
 import retrofit.RetrofitError;
 
@@ -27,6 +30,7 @@ public class RetrofitErrorHandler {
             text = "RetrofitErrorHandler.Kind.Http";
         } else if (error.getKind().equals(retrofit.RetrofitError.Kind.CONVERSION)) {
             text = "RetrofitErrorHandler.Kind.Conversion";
+            Log.i(Constants.TAG, "handleError: "+error.getMessage());
         } else if (error.getKind().equals(retrofit.RetrofitError.Kind.NETWORK)) {
             text = "RetrofitErrorHandler.Kind.Network";
         } else if (error.getKind().equals(retrofit.RetrofitError.Kind.UNEXPECTED)) {

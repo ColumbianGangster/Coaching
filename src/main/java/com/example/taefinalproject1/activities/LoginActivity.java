@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import com.crashlytics.android.Crashlytics;
 import com.example.taefinalproject1.R;
 
 import butterknife.Bind;
@@ -19,6 +20,7 @@ import eu.inmite.android.lib.validations.form.annotations.MinLength;
 import eu.inmite.android.lib.validations.form.annotations.NotEmpty;
 import eu.inmite.android.lib.validations.form.annotations.RegExp;
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by TAE_user2 on 20/01/2016.
@@ -67,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.login_activity);
         ButterKnife.bind(this);
         FormValidator.validate(this, new SimpleErrorPopupCallback(this));
