@@ -18,6 +18,7 @@ import com.example.taefinalproject1.R;
 import com.example.taefinalproject1.fragments.GalleryFragment;
 import com.example.taefinalproject1.fragments.MatchListFragment;
 import com.example.taefinalproject1.fragments.PlayerEffortFragment;
+import com.example.taefinalproject1.logic.FeedbackLogic;
 
 public class ParentActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -112,6 +113,9 @@ public class ParentActivity extends AppCompatActivity
             MatchListFragment matchListFragment = new MatchListFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_fragment_container, matchListFragment).commit();
+        } else if (id == R.id.nav_share){
+            FeedbackLogic feedbackLogic = new FeedbackLogic(this);
+            feedbackLogic.startMailActivity(this);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

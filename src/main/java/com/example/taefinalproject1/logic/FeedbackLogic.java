@@ -14,7 +14,7 @@ public class FeedbackLogic {
         startMailActivity(context);
     }
 
-    private void startMailActivity(Context context) {
+    public void startMailActivity(Context context) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType(EmailConstants.MESSAGE_TYPE);
         intent.putExtra(Intent.EXTRA_EMAIL, EmailConstants.DEVELOPER_EMAIL);

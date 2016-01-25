@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">League of Coaches</string>
 
+    <string name="first_time_intro">Welcome to League of Coaches. This application is used to help professional coaches on league of legends teams to coach their team. It allows them to monitor the player\'s games (seeing their activity and performance) and gives them data to help them provide strategic feedback. Coaching within League of Legends is demanding because a Coach needs to prove their value to the team continually. Being able to observe the user\'s activity allows the Coach to perform a systematic review.</string>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

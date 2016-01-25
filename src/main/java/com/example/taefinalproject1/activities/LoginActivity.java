@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.crashlytics.android.Crashlytics;
 import com.example.taefinalproject1.R;
+import com.example.taefinalproject1.utils.NetworkAvailability;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -69,8 +70,9 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
+
         setContentView(R.layout.login_activity);
+
         ButterKnife.bind(this);
         FormValidator.validate(this, new SimpleErrorPopupCallback(this));
     }

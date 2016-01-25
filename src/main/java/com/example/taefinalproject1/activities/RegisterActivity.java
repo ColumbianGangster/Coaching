@@ -28,7 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     @OnClick(R.id.register_add_edit_text) void add(){
         LinearLayout li = (LinearLayout) findViewById(R.id.register_edit_text_container);
         EditText et=new EditText(this);
-        et.setText("Smurf account");
+        et.setHint("Smurf account");
         smurfs.add(et);
         li.addView(et);
     }
