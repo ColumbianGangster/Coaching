@@ -56,4 +56,5 @@ dependencies {
     compile 'com.j256.ormlite:ormlite-android:4.48'
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.0'
+    compile 'jp.wasabeef:recyclerview-animators:2.1.0'
 }

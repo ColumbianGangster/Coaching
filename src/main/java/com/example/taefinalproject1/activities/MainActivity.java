@@ -23,20 +23,16 @@ public class MainActivity extends AppCompatActivity {
         final String PREFS_NAME = "MyPrefsFile";
 
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-
+        Intent intent;
         if (settings.getBoolean("my_first_time", true)) {
-            //the app is being launched for first time, do something
             Log.d("Comments", "First time");
-
-            // The first time this Android App is run, launch the FirstTimeActivity. Else, launch the LoginActivity
-            Intent firsttime = new Intent(this, FirstTimeActivity.class);
-            startActivity(firsttime);
-
-            // Record the fact that the app has been started at least once
+            intent = new Intent(this, FirstTimeActivity.class);
             settings.edit().putBoolean("my_first_time", false).commit();
         } else {
-            Intent login = new Intent(this, LoginActivity.class);
-            startActivity(login);
+            intent = new Intent(this, LoginActivity.class);
         }
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 }

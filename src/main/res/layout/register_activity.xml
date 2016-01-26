@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Your main account"
-        android:text="HasoN"/>
+        android:text="HosaN"/>
     <ImageButton
         android:id="@+id/register_add_edit_text"
         android:layout_width="100dp"

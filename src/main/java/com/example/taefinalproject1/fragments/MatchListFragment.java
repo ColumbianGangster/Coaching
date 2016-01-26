@@ -26,6 +26,8 @@ import com.example.taefinalproject1.utils.RetrofitErrorHandler;
 import java.util.ArrayList;
 import java.util.Date;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -55,8 +57,13 @@ public class MatchListFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setItemAnimator(new SlideInLeftAnimator());
         MyPreferences myPreference = new MyPreferences();
-        getMatchList("euw", Integer.toString(myPreference.retrieveIntPreference(myPreference.retrievePreference("mainaccount", getContext()), getContext())), "RANKED_SOLO_5x5", "SEASON2016", RestConstants.API_KEY, v);
+        String main = myPreference.retrievePreference("mainaccount", getContext());
+        Log.i(Constants.TAG, "onCreateView: MatchListFragment" + main);
+        String id =  myPreference.retrievePreference(main.toLowerCase(), getContext());
+        Log.i(Constants.TAG, "onCreateView: MatchListFragment" + id);
+        getMatchList("euw", id, "RANKED_SOLO_5x5", "SEASON2016", RestConstants.API_KEY, v);
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Getting data...");
         progressDialog.setMessage("Loading...");
@@ -94,7 +101,7 @@ public class MatchListFragment extends Fragment {
                 }
 
                 adapter = new MatchListAdapter(dataset, getActivity());
-                recyclerView.setAdapter(adapter);
+                recyclerView.setAdapter(new AlphaInAnimationAdapter(adapter));
             }
 
             @Override

@@ -13,5 +13,5 @@
     <string name="validation_password">Password must not be empty.</string>
     <string name="validation_name_length_toosmall">Length is too small</string>
     <string name="validation_name_length_toobig">Length is too big</string>
-    <string name="validation_name_only_alphanumeric">Only a-z, A-Z, numbers. Also a maximum of two consecutive spaces are allowed.</string>
+    <string name="validation_name_only_alphanumeric">Only a-z, A-Z, numbers.</string>
 </resources>

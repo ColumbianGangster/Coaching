@@ -56,6 +56,7 @@ public class DataRestAdapter {
     }
 
     public void getIdBySummonerName(String region, String summonerName, String api_key) {
+        Log.i(Constants.TAG, "getIdBySummonerName: function param" +summonerName);
         irest.getIdBySummonerName(region, summonerName, api_key, new Callback<NameToIdMap>() {
             @Override
             public void success(NameToIdMap nameToIdMap, Response response) {
@@ -69,8 +70,8 @@ public class DataRestAdapter {
                 int id = myGetID(innerjsonobj);
                 Log.i(Constants.TAG, "success: name is " + name + " id is " + id);
                 MyPreferences mypreferences = new MyPreferences();
-                Log.i(Constants.TAG, "success: " + mypreferences.retrieveIntPreference("Riven", context));
-                mypreferences.savePreference(name, id, context);
+                Log.i(Constants.TAG, "success: Riven's id is: " + mypreferences.retrieveIntPreference("Riven", context));
+                mypreferences.savePreference(name.toLowerCase(), Integer.toString(id), context);
                 Log.i(Constants.TAG, "success: Reached success");
             }
 

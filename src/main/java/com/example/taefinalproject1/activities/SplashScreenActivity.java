@@ -44,10 +44,14 @@ public class SplashScreenActivity extends AppCompatActivity {
             public void run() {
                 Intent mServiceIntent = new Intent(SplashScreenActivity.this, MyService.class);
                 mServiceIntent.putExtra("mainaccount", getIntent().getStringExtra("mainaccount"));
-                if(!getIntent().getStringArrayListExtra("smurfs").isEmpty()){ // if smurfs exist... i.e, if not empty
-                    mServiceIntent.putExtra("smurfs", getIntent().getStringArrayListExtra("smurfs"));
+                if(getIntent().getStringArrayListExtra("smurfs")!=null){
+                    // this is null when RegisterActivity is not created
+                    if(!getIntent().getStringArrayListExtra("smurfs").isEmpty()){ // if smurfs exist... i.e, if not empty
+                        mServiceIntent.putExtra("smurfs", getIntent().getStringArrayListExtra("smurfs"));
+                    }
                 }
                 mServiceIntent.setAction(ActionConstants.ACTION_SUMMONER_TO_ID);
+                Log.i(Constants.TAG, "run: "+mServiceIntent.getStringExtra("mainaccount"));
                 startService(mServiceIntent);
 
                 Intent intent = new Intent(SplashScreenActivity.this, MyService.class);

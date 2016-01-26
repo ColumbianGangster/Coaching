@@ -3,13 +3,18 @@ package com.example.taefinalproject1.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
 import com.example.taefinalproject1.R;
-import com.example.taefinalproject1.utils.NetworkAvailability;
+import com.example.taefinalproject1.constants.Constants;
+import com.example.taefinalproject1.logic.LoginLogic;
+import com.example.taefinalproject1.utils.MyPreferences;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,24 +26,23 @@ import eu.inmite.android.lib.validations.form.annotations.MinLength;
 import eu.inmite.android.lib.validations.form.annotations.NotEmpty;
 import eu.inmite.android.lib.validations.form.annotations.RegExp;
 import eu.inmite.android.lib.validations.form.callback.SimpleErrorPopupCallback;
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by TAE_user2 on 20/01/2016.
  */
 public class LoginActivity extends AppCompatActivity {
+    LoginLogic loginLogic;
     //https://github.com/inmite/android-validation-komensky
-    @NotEmpty(messageId = R.string.validation_name)
+    @NotEmpty(messageId = R.string.validation_name, order = 1)
     @MinLength(value = 3, messageId = R.string.validation_name_length_toosmall, order = 2)
     @MaxLength(value = 16, messageId = R.string.validation_name_length_toobig, order = 3)
     @RegExp(value = "^[a-zA-Z0-9]+$", messageId = R.string.validation_name_only_alphanumeric, order = 4)
-    // TODO: 20/01/2016 Fix the regular expressions so that it does not match more than 2 consecutive spaces
-    // "^[ ]{2,}$"
     @Bind(R.id.login_username)
     EditText username;
     @NotEmpty(messageId = R.string.validation_password)
     @Bind(R.id.login_password)
     EditText password;
+
     @Bind(R.id.login_remember_account)
     CheckBox rememberme;
     // TODO: 21/01/2016 Login automatically implementation 
@@ -49,6 +53,22 @@ public class LoginActivity extends AppCompatActivity {
     @Bind(R.id.login_create_account)
     Button create_account;
 
+    @OnClick(R.id.login_button) void login(){
+        if(loginLogic.do_you_remember_me()){
+            loginLogic.rememberName();
+            loginLogic.rememberPassword();
+        }
+        ArrayList<String> smurfAccounts = new ArrayList<>();
+        Intent intent = new Intent(this, SplashScreenActivity.class);
+        intent.putExtra("mainaccount", username.getText().toString());
+        intent.putExtra("smurfs", smurfAccounts);
+        MyPreferences myPreferences = new MyPreferences();
+        myPreferences.savePreference("mainaccount", username.getText().toString(), this);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
+    }
+
     @OnClick(R.id.login_create_account) void createAccount(){
         Intent intent = new Intent(this, RegisterActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -57,23 +77,34 @@ public class LoginActivity extends AppCompatActivity {
     }
     @OnClick(R.id.login_forgot_your_password) void forgotPassword(){
         // TODO: 20/01/2016 Implement forgot password button
+        Toast.makeText(this, "Forgot your password", Toast.LENGTH_SHORT).show();
     }
     @OnClick(R.id.login_with_gmail) void loginWithGmail(){
-        // TODO: 20/01/2016 Implement login with gmail button 
+        // TODO: 20/01/2016 Implement login with gmail button
     }
     @OnCheckedChanged(R.id.login_remember_account) void onChecked(boolean checked) {
         if(checked){
-            // TODO: 20/01/2016 Implement remember me logic
+            loginLogic.remember_me(true);
+            Log.i(Constants.TAG, "onChecked: " + loginLogic.do_you_remember_me());
+        } else {
+            loginLogic.remember_me(false);
+            Log.i(Constants.TAG, "onChecked: " + loginLogic.do_you_remember_me());
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.login_activity);
-
+        loginLogic = new LoginLogic(this,findViewById(R.id.login_linear));
         ButterKnife.bind(this);
+        Log.i(Constants.TAG, "onCreate: do I remember you?: "+loginLogic.do_you_remember_me());
+        if(loginLogic.do_you_remember_me()){
+            // prevents annoying default values on SharedPreference
+            username.setText(loginLogic.getName());
+            password.setText(loginLogic.getPassword());
+            rememberme.setChecked(true);
+        }
         FormValidator.validate(this, new SimpleErrorPopupCallback(this));
     }
 }

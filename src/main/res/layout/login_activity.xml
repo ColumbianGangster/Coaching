@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerInParent="true"
+    android:id="@+id/login_linear"
     android:padding="20dp">
     <ImageView
         android:id="@+id/login_image"
@@ -14,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Username"
-        android:text="HosaN"/>
+        />
     <EditText
         android:id="@+id/login_password"
         android:hint="Password"
@@ -27,6 +28,12 @@
         android:layout_height="wrap_content"
         android:text="Remember me"/>
     <Button
+        android:id="@+id/login_button"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"/>
+    <Button
         android:id="@+id/login_create_account"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,7 +43,7 @@
         android:id="@+id/login_forgot_your_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.ButtonBar"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:text="Forgot your password"/>
     <Button
         android:id="@+id/login_with_gmail"
