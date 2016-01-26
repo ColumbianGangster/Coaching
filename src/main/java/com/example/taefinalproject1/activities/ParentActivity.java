@@ -10,14 +10,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.taefinalproject1.R;
+import com.example.taefinalproject1.constants.Constants;
 import com.example.taefinalproject1.fragments.GalleryFragment;
 import com.example.taefinalproject1.fragments.MatchListFragment;
 import com.example.taefinalproject1.fragments.PlayerEffortFragment;
+import com.example.taefinalproject1.fragments.ProBuildsFragment;
+import com.example.taefinalproject1.fragments.TeamBuilderFragment;
 import com.example.taefinalproject1.logic.FeedbackLogic;
 
 public class ParentActivity extends AppCompatActivity
@@ -77,7 +81,6 @@ public class ParentActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -104,11 +107,16 @@ public class ParentActivity extends AppCompatActivity
                     .replace(R.id.main_fragment_container, playerEffortFragment).commit();
 
         } else if (id == R.id.nav_probuilds) {
+            ProBuildsFragment proBuildsFragment = new ProBuildsFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment_container,proBuildsFragment).commit();
 
         } else if (id == R.id.nav_recent_games){
 
-        } else if (id == R.id.nav_tournament_rules){
-
+        } else if (id == R.id.nav_team_builder){
+            TeamBuilderFragment teamBuilderFragment = new TeamBuilderFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_fragment_container,teamBuilderFragment).commit();
         } else if (id == R.id.nav_view_all_matches){
             MatchListFragment matchListFragment = new MatchListFragment();
             getSupportFragmentManager().beginTransaction()
@@ -121,5 +129,12 @@ public class ParentActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void match_list(){
+        Log.i(Constants.TAG, "match_list: function called");
+        MatchListFragment matchListFragment = new MatchListFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment_container, matchListFragment).commit();
     }
 }

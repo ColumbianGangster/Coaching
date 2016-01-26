@@ -57,6 +57,8 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.View
     private String getUrl(String fromJSON){
         if(fromJSON.equals("LeBlanc") || fromJSON.equals("Leblanc")) {
             return "http://ddragon.leagueoflegends.com/cdn/5.24.2/img/champion/Leblanc.png";
+        } else if(fromJSON.equals("Drmundo") || fromJSON.equals("drmundo") || fromJSON.equals("Dr. Mundo")){
+            return "http://ddragon.leagueoflegends.com/cdn/5.24.2/img/champion/DrMundo.png";
         } else {
             return "http://ddragon.leagueoflegends.com/cdn/5.24.2/img/champion/" + fromJSON + ".png";
         }

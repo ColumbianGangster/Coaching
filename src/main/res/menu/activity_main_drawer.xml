@@ -33,9 +33,9 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="Player Effort Monitor" />
         <item
-            android:id="@+id/nav_tournament_rules"
+            android:id="@+id/nav_team_builder"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tournament Rules" />
+            android:title="Team Builder" />
         <item
             android:id="@+id/nav_view_all_matches"
             android:icon="@drawable/ic_menu_manage"
