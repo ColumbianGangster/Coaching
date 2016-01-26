@@ -8,6 +8,7 @@ import android.widget.Button;
 import com.example.taefinalproject1.R;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -24,5 +25,6 @@ public class FirstTimeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.first_time_activity);
+        ButterKnife.bind(this);
     }
 }

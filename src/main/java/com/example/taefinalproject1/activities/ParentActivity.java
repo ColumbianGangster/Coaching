@@ -23,6 +23,9 @@ import com.example.taefinalproject1.fragments.PlayerEffortFragment;
 import com.example.taefinalproject1.fragments.ProBuildsFragment;
 import com.example.taefinalproject1.fragments.TeamBuilderFragment;
 import com.example.taefinalproject1.logic.FeedbackLogic;
+import com.example.taefinalproject1.models.custom.MatchListData;
+
+import java.util.ArrayList;
 
 public class ParentActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -136,5 +139,15 @@ public class ParentActivity extends AppCompatActivity
         MatchListFragment matchListFragment = new MatchListFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_fragment_container, matchListFragment).commit();
+    }
+    public void player_effort(ArrayList<MatchListData> dataset){
+        PlayerEffortFragment playerEffortFragment = new PlayerEffortFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("match_list", dataset);
+        playerEffortFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment_container, playerEffortFragment).commit();
+
+
     }
 }

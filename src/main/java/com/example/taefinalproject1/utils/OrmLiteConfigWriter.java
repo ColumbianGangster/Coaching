@@ -2,6 +2,9 @@ package com.example.taefinalproject1.utils;
 
 import com.example.taefinalproject1.persistence.LocalUser;
 import com.example.taefinalproject1.persistence.LocalUsersLeagueAccounts;
+import com.example.taefinalproject1.persistence.teambuilder.Champion;
+import com.example.taefinalproject1.persistence.teambuilder.Player;
+import com.example.taefinalproject1.persistence.teambuilder.Team;
 import com.j256.ormlite.android.apptools.OrmLiteConfigUtil;
 
 import java.io.File;
@@ -19,7 +22,10 @@ With a little bit of work (and some caveats), you can remove all annotation work
      */
     private static final Class<?>[] CLASSES = new Class[] {
             LocalUser.class,
-            LocalUsersLeagueAccounts.class
+            LocalUsersLeagueAccounts.class,
+            Player.class,
+            Champion.class,
+            Team.class
     };
     public static void main(String[] args) throws Exception {
         writeConfigFile(new File("app/src/main/res/raw/ormlite_config.txt"), CLASSES);

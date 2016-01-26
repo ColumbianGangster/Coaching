@@ -1,11 +1,14 @@
 package com.example.taefinalproject1.models.custom;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by TAE_user2 on 25/01/2016.
  */
-public class MatchListData {
+public class MatchListData implements Parcelable {
     String championName;
     String lane;
     String rankedQueue;
@@ -25,6 +28,27 @@ public class MatchListData {
         this.matchid = matchid;
         this.date = date;
     }
+
+    protected MatchListData(Parcel in) {
+        championName = in.readString();
+        lane = in.readString();
+        rankedQueue = in.readString();
+        season = in.readString();
+        region = in.readString();
+        role = in.readString();
+    }
+
+    public static final Creator<MatchListData> CREATOR = new Creator<MatchListData>() {
+        @Override
+        public MatchListData createFromParcel(Parcel in) {
+            return new MatchListData(in);
+        }
+
+        @Override
+        public MatchListData[] newArray(int size) {
+            return new MatchListData[size];
+        }
+    };
 
     public String getChampionName() {
         return championName;
@@ -88,5 +112,20 @@ public class MatchListData {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(championName);
+        dest.writeString(lane);
+        dest.writeString(rankedQueue);
+        dest.writeString(season);
+        dest.writeString(region);
+        dest.writeString(role);
     }
 }

@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.taefinalproject1.R;
+import com.example.taefinalproject1.activities.ParentActivity;
+import com.example.taefinalproject1.listeners.ItemClickListener;
 import com.example.taefinalproject1.models.custom.MatchListData;
 import com.example.taefinalproject1.utils.MyPreferences;
 import com.squareup.picasso.Picasso;
@@ -53,6 +55,14 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.View
         holder.matchlist_queue.setText(dataset.get(position).getRankedQueue());
         holder.matchlist_season.setText(dataset.get(position).getSeason());
         holder.matchlist_timestamp.setText(dataset.get(position).getDate().toString());
+
+        holder.setClickListener(new ItemClickListener() {
+            @Override
+            public void onClick(View view, int position, boolean isLongClick) {
+                ParentActivity parentActivity = (ParentActivity) context;
+                parentActivity.player_effort(dataset);
+            }
+        });
     }
     private String getUrl(String fromJSON){
         if(fromJSON.equals("LeBlanc") || fromJSON.equals("Leblanc")) {
@@ -69,7 +79,7 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.View
         return dataset.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
         @Bind(R.id.matchlist_champion_image)
         CircleImageView matchlist_circleImageView;
@@ -86,9 +96,21 @@ public class MatchListAdapter extends RecyclerView.Adapter<MatchListAdapter.View
         @Bind(R.id.matchlist_season)
         TextView matchlist_season;
 
+        private ItemClickListener itemClickListener;
+
         public ViewHolder(View v) {
             super(v);
+            itemView.setOnClickListener(this);
             ButterKnife.bind(this, v);
+        }
+
+        public void setClickListener(ItemClickListener itemClickListener){
+            this.itemClickListener = itemClickListener;
+        }
+
+        @Override
+        public void onClick(View view) {
+            itemClickListener.onClick(view, getPosition(), false);
         }
     }
     public MatchListAdapter(ArrayList<MatchListData> matchListDataArrayList, Context context){
