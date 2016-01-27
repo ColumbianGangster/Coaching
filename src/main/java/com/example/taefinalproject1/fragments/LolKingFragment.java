@@ -28,4 +28,10 @@ public class LolKingFragment extends Fragment {
         myWebView.setWebViewClient(new WebViewClient());
         return v;
     }
+    public Boolean canGoBack(){
+        return myWebView.canGoBack();
+    }
+    public void goBack() {
+        myWebView.goBack();
+    }
 }

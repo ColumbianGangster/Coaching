@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,7 +18,9 @@ import android.view.View;
 
 import com.example.taefinalproject1.R;
 import com.example.taefinalproject1.constants.Constants;
+import com.example.taefinalproject1.constants.FragmentConstants;
 import com.example.taefinalproject1.fragments.GalleryFragment;
+import com.example.taefinalproject1.fragments.HomeFragment;
 import com.example.taefinalproject1.fragments.LolKingFragment;
 import com.example.taefinalproject1.fragments.MatchListFragment;
 import com.example.taefinalproject1.fragments.PlayerEffortFragment;
@@ -55,11 +58,33 @@ public class ParentActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        HomeFragment homeFragment = new HomeFragment();
+//        gotoFragment(FragmentConstants.HOME_FRAGMENT, homeFragment);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment_container,homeFragment).commit();
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        Fragment webview = getSupportFragmentManager().findFragmentByTag(FragmentConstants.PROBUILDS_FRAGMENT);
+        if (webview instanceof ProBuildsFragment) {
+            boolean goback = ((ProBuildsFragment)webview).canGoBack();
+            if (goback){
+                ((ProBuildsFragment)webview).goBack();
+            } else {
+                super.onBackPressed();
+            }
+        }
+        Fragment webview2 = getSupportFragmentManager().findFragmentByTag(FragmentConstants.LOLKING_FRAGMENT);
+        if (webview2 instanceof LolKingFragment) {
+            boolean goback = ((LolKingFragment)webview).canGoBack();
+            if (goback){
+                ((LolKingFragment)webview).goBack();
+            } else {
+                super.onBackPressed();
+            }
+        }
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -91,40 +116,30 @@ public class ParentActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
-// TODO: 18/01/2016 Implement onNavigationItemSelected statements 
-//        if (id == R.id.nav_challenger_players) {
-//            // Handle the camera action
         if (id == R.id.nav_gallery) {
             GalleryFragment galleryFragment = new GalleryFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_fragment_container, galleryFragment).commit();
-//        } else if (id == R.id.nav_master_players) {
-
+            gotoFragment(FragmentConstants.GALLERY_FRAGMENT, galleryFragment);
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.main_fragment_container, galleryFragment).commit();
         } else if (id == R.id.nav_myteam) {
             Intent intent = new Intent(this, ScreenSlidePagerActivity.class);
             startActivity(intent);
-//        } else if (id == R.id.nav_player_effort) {
-//            PlayerEffortFragment playerEffortFragment = new PlayerEffortFragment();
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.main_fragment_container, playerEffortFragment).commit();
-//
         } else if (id == R.id.nav_probuilds) {
             ProBuildsFragment proBuildsFragment = new ProBuildsFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_fragment_container,proBuildsFragment).commit();
-
-//        } else if (id == R.id.nav_recent_games){
-
+            gotoFragment(FragmentConstants.PROBUILDS_FRAGMENT, proBuildsFragment);
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.main_fragment_container,proBuildsFragment).commit();
         } else if (id == R.id.nav_team_builder){
             TeamBuilderFragment teamBuilderFragment = new TeamBuilderFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_fragment_container,teamBuilderFragment).commit();
+            gotoFragment(FragmentConstants.TEAMBUILDER_FRAGMENT, teamBuilderFragment);
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.main_fragment_container,teamBuilderFragment).commit();
         } else if (id == R.id.nav_view_all_matches){
             MatchListFragment matchListFragment = new MatchListFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_fragment_container, matchListFragment).commit();
+            gotoFragment(FragmentConstants.MATCHLIST_FRAGMENT,matchListFragment);
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.main_fragment_container, matchListFragment).commit();
         } else if (id == R.id.nav_share){
             FeedbackLogic feedbackLogic = new FeedbackLogic(this);
             feedbackLogic.startMailActivity(this);
@@ -138,16 +153,18 @@ public class ParentActivity extends AppCompatActivity
     public void match_list(){
         Log.i(Constants.TAG, "match_list: function called");
         MatchListFragment matchListFragment = new MatchListFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_fragment_container, matchListFragment).commit();
+        gotoFragment(FragmentConstants.MATCHLIST_FRAGMENT, matchListFragment);
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.main_fragment_container, matchListFragment).commit();
     }
     public void player_effort(ArrayList<MatchListData> dataset){
         PlayerEffortFragment playerEffortFragment = new PlayerEffortFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("match_list", dataset);
         playerEffortFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_fragment_container, playerEffortFragment).commit();
+        gotoFragment(FragmentConstants.PLAYEREFFORT_FRAGMENT, playerEffortFragment);
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.main_fragment_container, playerEffortFragment).commit();
     }
 
     public void grid_item_web_view(String url){
@@ -155,7 +172,14 @@ public class ParentActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         bundle.putString("url", url);
         lolKingFragment.setArguments(bundle);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.main_fragment_container, lolKingFragment).commit();
+        gotoFragment(FragmentConstants.LOLKING_FRAGMENT, lolKingFragment);
+    }
+
+    private void gotoFragment(String TAG, Fragment fragment ){
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_fragment_container, fragment, TAG)
+                .addToBackStack(TAG)
+                .commit();
     }
 }

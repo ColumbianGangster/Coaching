@@ -22,14 +22,16 @@ import java.sql.SQLException;
 public class MyDatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String DATABASE_NAME = "localUser.db";
     private static final int DATABASE_VERSION = 1;
-//    private Dao<LocalUser,String> localUserDao = null;
+    private Dao<LocalUser,String> localUserDao = null;
 //    private Dao<LocalUsersLeagueAccounts, String> usersAccounts = null;
     private Dao<Team, Integer> teamDao = null;
     private Dao<Player, Integer> playerDao = null;
     private Dao<Champion, Integer> championDao = null;
+
+
     private Context context;
 
-    public MyDatabaseHelper(Context context, String databaseName, int databaseVersion) {
+    public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME,null, DATABASE_VERSION, R.raw.ormlite_config);
     }
 
@@ -77,5 +79,12 @@ public class MyDatabaseHelper extends OrmLiteSqliteOpenHelper {
             championDao = getDao(Champion.class);
         }
         return championDao;
+    }
+
+    public Dao<LocalUser, String> getLocalUserDao() throws SQLException {
+        if(localUserDao == null) {
+            localUserDao = getDao(LocalUser.class);
+        }
+        return localUserDao;
     }
 }

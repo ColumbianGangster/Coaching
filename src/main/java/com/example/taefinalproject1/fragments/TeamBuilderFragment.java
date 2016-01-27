@@ -42,13 +42,13 @@ public class TeamBuilderFragment extends android.support.v4.app.Fragment {
     private int datasetsize = 0;
 
     private ArrayList<String> dataset = new ArrayList<>();
+    private ArrayList<String> players = new ArrayList<>();
 
 
     private RecyclerView recyclerView;
     private TeamBuilderAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     // TODO: 20/01/2016 Build the team builder fragment, as well as the XML
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -74,7 +74,15 @@ public class TeamBuilderFragment extends android.support.v4.app.Fragment {
 
         add_button.setBackgroundResource(R.drawable.ic_action_add_player);
         del_button.setBackgroundResource(R.drawable.ic_action_delete_player);
+
+        del_button.setPadding(0,0,5,0);
+
         add_champion_button.setBackgroundResource(R.drawable.ic_action_add_character);
+        remove_champion_button.setBackgroundResource(R.drawable.ic_action_delete_player);
+
+        remove_champion_button.setPadding(0,0,5,0);
+
+        save_team_button.setBackgroundResource(R.drawable.ic_action_save_team);
 
 //        del_button.setText("Del");
 //        view_button.setText("View");
@@ -86,15 +94,23 @@ public class TeamBuilderFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 Log.i(Constants.TAG, "onClick: Add");
-                adapter.add(editText.getText().toString());
-                adapter.notifyItemInserted(datasetsize);
-                editText.setText("");
-                Intent mServiceIntent = new Intent(getActivity(), MyService.class);
-                mServiceIntent.putExtra("mainaccount", adapter.get().get(datasetsize));
-                mServiceIntent.setAction(ActionConstants.ACTION_SUMMONER_TO_ID);
-                Log.i(Constants.TAG, "run: " + mServiceIntent.getStringExtra("mainaccount"));
-                getActivity().startService(mServiceIntent);
-                datasetsize++;
+                if(!editText.getText().toString().isEmpty()){
+                    if(!players.contains(editText.getText().toString())){
+                        adapter.add(editText.getText().toString());
+                        adapter.notifyItemInserted(datasetsize);
+                        editText.setText("");
+                        Intent mServiceIntent = new Intent(getActivity(), MyService.class);
+                        mServiceIntent.putExtra("mainaccount", adapter.get().get(datasetsize));
+                        mServiceIntent.setAction(ActionConstants.ACTION_SUMMONER_TO_ID);
+                        Log.i(Constants.TAG, "run: " + mServiceIntent.getStringExtra("mainaccount"));
+                        getActivity().startService(mServiceIntent);
+                        datasetsize++;
+                    } else {
+                        Toast.makeText(getContext(), "Player already exists on this team", Toast.LENGTH_SHORT);
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Please enter a player name", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         del_button.setOnClickListener(new View.OnClickListener() {
@@ -110,24 +126,51 @@ public class TeamBuilderFragment extends android.support.v4.app.Fragment {
                 }
             }
         });
-        view_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(Constants.TAG, "onClick: View");
-            }
-        });
 
         add_champion_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Picasso.with(getContext()).load(R.drawable.zed).into(adapter.viewholder.champion2);
+                if(datasetsize > 0){
+                    int index = adapter.get().indexOf(editText.getText().toString());
+                    Log.i(Constants.TAG, "onClick: index"+index);
+                    if(index != -1){
+                        if(adapter.viewHolderList.get(index).current_added != 3){
+                            int sub_index = adapter.viewHolderList.get(index).current_added;
+                            if(adapter.viewHolderList.get(index).circleImageViewArrayList.get(sub_index).getVisibility() == View.GONE){
+                                adapter.viewHolderList.get(index).circleImageViewArrayList.get(sub_index).setVisibility(View.VISIBLE);
+                            } else {
+                                Picasso.with(getContext()).load(R.drawable.zed).into(adapter.viewHolderList.get(index).circleImageViewArrayList.get(sub_index));
+                            }
+                            adapter.viewHolderList.get(index).current_added++;
+                        } else {
+                            Toast.makeText(getActivity(), "Maximum champions reached", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Who plays this champion? To add a champion, add a username",Toast.LENGTH_SHORT);
+                    }
+                }
             }
         });
 
         remove_champion_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(datasetsize > 0){
+                    int index = adapter.get().indexOf(editText.getText().toString());
+                    Log.i(Constants.TAG, "onClick: index"+index);
+                    if(index != -1){
+                        if(adapter.viewHolderList.get(index).current_added != 0){
+                            int sub_index = adapter.viewHolderList.get(index).current_added;
+                            Log.i(Constants.TAG, "onClick: subindex on del"+sub_index);
+                            adapter.viewHolderList.get(index).circleImageViewArrayList.get(sub_index-1).setVisibility(View.GONE);
+                            adapter.viewHolderList.get(index).current_added--;
+                        } else {
+                            Toast.makeText(getActivity(), "Cannot remove any more champions", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), "Who plays this champion? To add a champion, add a username",Toast.LENGTH_SHORT);
+                    }
+                }
             }
         });
 
@@ -145,9 +188,10 @@ public class TeamBuilderFragment extends android.support.v4.app.Fragment {
 
         toolbar.addView(add_button);
         toolbar.addView(del_button);
-        toolbar.addView(view_button);
+
         toolbar.addView(add_champion_button);
         toolbar.addView(remove_champion_button);
+
         toolbar.addView(save_team_button);
 
         prev_toolbar_title = toolbar.getTitle().toString();
@@ -168,7 +212,6 @@ public class TeamBuilderFragment extends android.support.v4.app.Fragment {
         super.onDestroyView();
         toolbar.removeView(add_button);
         toolbar.removeView(del_button);
-        toolbar.removeView(view_button);
         toolbar.removeView(add_champion_button);
         toolbar.removeView(remove_champion_button);
         toolbar.removeView(save_team_button);

@@ -11,6 +11,7 @@ import com.example.taefinalproject1.R;
 import com.example.taefinalproject1.constants.ActionConstants;
 import com.example.taefinalproject1.constants.Constants;
 import com.example.taefinalproject1.services.MyService;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,31 +28,28 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.splash_screen);
         ButterKnife.bind(this);
         Log.i(Constants.TAG, "onCreate: SplashScreen: Loading image...");
-//        Picasso.with(this)
-//                .load(R.drawable.zed_background)
-//                .placeholder(R.drawable.place_holder)
-//                .error(R.drawable.error)
-//                .into(imageView);
+        Picasso.with(this)
+                .load(R.drawable.background1)
+                .into(imageView);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 Intent mServiceIntent = new Intent(SplashScreenActivity.this, MyService.class);
                 mServiceIntent.putExtra("mainaccount", getIntent().getStringExtra("mainaccount"));
-                if(getIntent().getStringArrayListExtra("smurfs")!=null){
+                if (getIntent().getStringArrayListExtra("smurfs") != null) {
                     // this is null when RegisterActivity is not created
-                    if(!getIntent().getStringArrayListExtra("smurfs").isEmpty()){ // if smurfs exist... i.e, if not empty
+                    if (!getIntent().getStringArrayListExtra("smurfs").isEmpty()) { // if smurfs exist... i.e, if not empty
                         mServiceIntent.putExtra("smurfs", getIntent().getStringArrayListExtra("smurfs"));
                     }
                 }
                 mServiceIntent.setAction(ActionConstants.ACTION_SUMMONER_TO_ID);
-                Log.i(Constants.TAG, "run: "+mServiceIntent.getStringExtra("mainaccount"));
+                Log.i(Constants.TAG, "run: " + mServiceIntent.getStringExtra("mainaccount"));
                 startService(mServiceIntent);
 
                 Intent intent = new Intent(SplashScreenActivity.this, MyService.class);
@@ -62,6 +60,13 @@ public class SplashScreenActivity extends AppCompatActivity {
                 startActivity(activityintent);
                 finish();
             }
-        }, 5000);
+        }, 3000);
+        imageView = null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
     }
 }

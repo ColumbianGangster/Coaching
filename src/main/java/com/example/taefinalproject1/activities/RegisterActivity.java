@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.taefinalproject1.R;
+import com.example.taefinalproject1.persistence.MyDatabaseManager;
 import com.example.taefinalproject1.utils.MyPreferences;
 
 import java.util.ArrayList;
@@ -21,9 +23,19 @@ import butterknife.OnClick;
 public class RegisterActivity extends AppCompatActivity {
 //    @Bind(R.id.register_add_edit_text)
 //    Button add_edit_text;
+    @Bind(R.id.register_username)
+    EditText username;
+    @Bind(R.id.register_password)
+    EditText password;
+
     @Bind(R.id.register_mainaccount_edittext)
     EditText mainAccount;
     ArrayList<EditText> smurfs = new ArrayList<EditText>();
+
+    @OnClick(R.id.register_create_account) void create(){
+        createAccount();
+        Toast.makeText(this, "Account created", Toast.LENGTH_SHORT);
+    }
 
     @OnClick(R.id.register_add_edit_text) void add(){
         LinearLayout li = (LinearLayout) findViewById(R.id.register_edit_text_container);
@@ -39,6 +51,8 @@ public class RegisterActivity extends AppCompatActivity {
             smurfAccounts.add(e.getText().toString());
         }
 
+//        createAccount();
+
         Intent intent = new Intent(this, SplashScreenActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("mainaccount", mainAccount.getText().toString());
@@ -47,6 +61,11 @@ public class RegisterActivity extends AppCompatActivity {
         myPreferences.savePreference("mainaccount", mainAccount.getText().toString(), this);
         startActivity(intent);
         finish();
+    }
+
+    private void createAccount(){
+        MyDatabaseManager myDatabaseManager = new MyDatabaseManager(this);
+        myDatabaseManager.saveLocalUser(username.getText().toString(), password.getText().toString());
     }
 
     @Override

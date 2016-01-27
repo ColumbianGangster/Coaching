@@ -12,6 +12,7 @@ import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by TAE_user2 on 21/01/2016.
@@ -114,5 +115,29 @@ public class MyDatabaseManager {
     players.add(A); players.add(B); players.add(C);
     saveWholeTeam(team,players);
      */
+    public void saveLocalUser(String username, String password){
+        Dao dao = null;
+        try {
+            dao = getHelper().getLocalUserDao();
+            dao.create(new LocalUser(username, password));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public Boolean authenticate(String username, String password){
+        try {
+            Dao dao = getHelper().getLocalUserDao();
+            List<LocalUser> list = dao.queryForAll();
+            for(LocalUser localUser : list){
+                if(localUser.getUsername().equalsIgnoreCase(username) && localUser.getPassword().equals(password)){
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 }

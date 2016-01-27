@@ -16,6 +16,8 @@ import com.example.taefinalproject1.utils.MyPreferences;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -24,12 +26,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class TeamBuilderAdapter extends RecyclerView.Adapter<TeamBuilderAdapter.ViewHolder> {
     Context context;
+    public List<ViewHolder> viewHolderList;
     public ViewHolder viewholder;
 
     ArrayList<String> dataset = new ArrayList<String>();
 
     public TeamBuilderAdapter(ArrayList<String> mydataset, Context context){
         this.dataset = mydataset;
+        viewHolderList = new LinkedList<>();
         this.context = context;
     }
 
@@ -47,21 +51,28 @@ public class TeamBuilderAdapter extends RecyclerView.Adapter<TeamBuilderAdapter.
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public int current_added;
         public CircleImageView champion;
         public CircleImageView champion2;
         public CircleImageView champion3;
         public CircleImageView champion4;
+        public ArrayList<CircleImageView> circleImageViewArrayList;
+
         public TextView player_name;
         private ItemClickListener itemClickListener;
 
         public ViewHolder(View v) {
             super(v);
+            current_added = 0;
+            circleImageViewArrayList = new ArrayList<>();
             champion = (CircleImageView) v.findViewById(R.id.team_builder_champion_image);
             player_name = (TextView) v.findViewById(R.id.team_builder_playername);
             champion2 = (CircleImageView) v.findViewById(R.id.team_builder_champion_image2);
             champion3 = (CircleImageView) v.findViewById(R.id.team_builder_champion_image3);
             champion4 = (CircleImageView) v.findViewById(R.id.team_builder_champion_image4);
-
+            circleImageViewArrayList.add(champion2);
+            circleImageViewArrayList.add(champion3);
+            circleImageViewArrayList.add(champion4);
             v.setOnClickListener(this);
         }
         public void setClickListener(ItemClickListener itemClickListener){
@@ -85,6 +96,7 @@ public class TeamBuilderAdapter extends RecyclerView.Adapter<TeamBuilderAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         this.viewholder = holder;
+        this.viewHolderList.add(holder);
         holder.player_name.setText(dataset.get(position));
         Picasso.with(context)
                 .load(R.drawable.aatrox)

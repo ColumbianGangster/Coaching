@@ -14,4 +14,5 @@
     <string name="validation_name_length_toosmall">Length is too small</string>
     <string name="validation_name_length_toobig">Length is too big</string>
     <string name="validation_name_only_alphanumeric">Only a-z, A-Z, numbers.</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
