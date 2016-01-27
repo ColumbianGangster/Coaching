@@ -20,6 +20,11 @@ public class GalleryAdapter extends BaseAdapter {
     private Context mContext;
     private Integer[] mThumbIds;
     private LinkedList<Integer> tmp = new LinkedList<>();
+    private LinkedList<String> lof;
+
+    public String getName(int position){
+        return lof.get(position);
+    }
     public GalleryAdapter(Context c) {
         mContext = c;
         this.mThumbIds = getmThumbIds();
@@ -41,30 +46,24 @@ public class GalleryAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         if (convertView == null) {
-            // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-//            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
-//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//            imageView.setPadding(8, 8, 8, 8);
         } else {
             imageView = (ImageView) convertView;
         }
         Log.i(Constants.TAG, "getView: "+mThumbIds[position]);
-        // TODO: 20/01/2016 java.lang.IllegalArgumentException: Resource ID must not be zero. appears at Irelia. 
         Picasso.with(mContext)
                 .load(mThumbIds[position])
                 .placeholder(R.drawable.place_holder)
                 .error(R.drawable.error)
 //                .resize(100, 100).centerCrop()
                 .into(imageView);
-
 //        imageView.setImageResource(mThumbIds[position]);
         return imageView;
     }
 
     private Integer[] getmThumbIds(){
         // TODO: 18/01/2016 Implement thumbnailIds for Champion Selection Screen
-        LinkedList<String> lof = new LinkedList<>();
+        lof = new LinkedList<>();
         lof.add("aatrox");
         lof.add("ahri");
         lof.add("akali");

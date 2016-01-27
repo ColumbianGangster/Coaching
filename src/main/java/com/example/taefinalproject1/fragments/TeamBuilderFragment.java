@@ -10,8 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.taefinalproject1.R;
@@ -19,6 +19,7 @@ import com.example.taefinalproject1.adapters.TeamBuilderAdapter;
 import com.example.taefinalproject1.constants.ActionConstants;
 import com.example.taefinalproject1.constants.Constants;
 import com.example.taefinalproject1.services.MyService;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -29,12 +30,12 @@ import jp.wasabeef.recyclerview.animators.ScaleInRightAnimator;
  */
 public class TeamBuilderFragment extends android.support.v4.app.Fragment {
     private Toolbar toolbar;
-    private Button add_button;
-    private Button del_button;
-    private Button view_button;
-    private Button save_team_button;
-    private Button add_champion_button;
-    private Button remove_champion_button;
+    private ImageButton add_button;
+    private ImageButton del_button;
+    private ImageButton view_button;
+    private ImageButton save_team_button;
+    private ImageButton add_champion_button;
+    private ImageButton remove_champion_button;
 
     private String prev_toolbar_title;
     private EditText editText;
@@ -52,8 +53,6 @@ public class TeamBuilderFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Nullable
@@ -62,21 +61,26 @@ public class TeamBuilderFragment extends android.support.v4.app.Fragment {
         View v =  inflater.inflate(R.layout.teambuilder_fragment_list, container, false);
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
 
+        toolbar.hideOverflowMenu();
+
         editText = (EditText) v.findViewById(R.id.team_builder_edit);
         adapter = new TeamBuilderAdapter(dataset, getActivity());
-        add_button = new Button(getActivity());
-        del_button = new Button(getActivity());
-        view_button = new Button(getActivity());
-        save_team_button = new Button(getActivity());
-        add_champion_button = new Button(getActivity());
-        remove_champion_button = new Button(getActivity());
+        add_button = new ImageButton(getActivity());
+        del_button = new ImageButton(getActivity());
+        view_button = new ImageButton(getActivity());
+        save_team_button = new ImageButton(getActivity());
+        add_champion_button = new ImageButton(getActivity());
+        remove_champion_button = new ImageButton(getActivity());
 
-        add_button.setText("Add");
-        del_button.setText("Del");
-        view_button.setText("View");
-        add_champion_button.setText("Add Champion");
-        remove_champion_button.setText("Del Champion");
-        save_team_button.setText("Save Team");
+        add_button.setBackgroundResource(R.drawable.ic_action_add_player);
+        del_button.setBackgroundResource(R.drawable.ic_action_delete_player);
+        add_champion_button.setBackgroundResource(R.drawable.ic_action_add_character);
+
+//        del_button.setText("Del");
+//        view_button.setText("View");
+//        add_champion_button.setText("Add Champion");
+//        remove_champion_button.setText("Del Champion");
+//        save_team_button.setText("Save Team");
 
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +120,7 @@ public class TeamBuilderFragment extends android.support.v4.app.Fragment {
         add_champion_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Picasso.with(getContext()).load(R.drawable.zed).into(adapter.viewholder.champion2);
             }
         });
 

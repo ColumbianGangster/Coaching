@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,8 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Date;
+import java.util.StringTokenizer;
 
 /**
  * Created by TAE_user2 on 25/01/2016.
@@ -29,21 +31,14 @@ public class PlayerEffortFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.player_effort_fragment, container, false);
-        ArrayList<MatchListData> zzzz = getArguments().getParcelableArrayList("match_list");
 
-        ArrayList<Integer> gggg = getGamesPerDay(zzzz);
-//        ArrayList<Integer> al = new ArrayList<>();
-//        al.add(4); al.add(8); al.add(6); al.add(12); al.add(18); al.add(9);
-//        al.add(2); al.add(6); al.add(13); al.add(1); al.add(20); al.add(10);
-
+        ArrayList<MatchListData> matchListDataArrayList = getArguments().getParcelableArrayList("match_list");
+        int n = 11;
+        ArrayList<Integer> frequencyArrayList = getGamesPerDay(matchListDataArrayList);
         chart = new BarChart(getActivity());
 
-        //getActivity().getIntent().getIntegerArrayListExtra("dataset");
-        BarData data = new BarData(labels(), r(gggg));
-//        LimitLine line = new LimitLine(10f);
-//        data.addLimitLine(line);
+        BarData data = new BarData(labels(n), r(frequencyArrayList));
         Log.i(Constants.TAG, "onCreateView: " + data.getDataSets().get(0).toString());
 
         chart.setData(data);
@@ -54,27 +49,59 @@ public class PlayerEffortFragment extends Fragment {
         chart.setDoubleTapToZoomEnabled(true);
         FrameLayout parent = (FrameLayout) v.findViewById(R.id.parent_layout);
         parent.addView(chart);
-//        ButterKnife.bind(this,v);
         return v;
     }
 
     private ArrayList<Integer> getGamesPerDay(ArrayList<MatchListData> input){
         // zero initialises an Array List
-        ArrayList<Integer> al = new ArrayList<Integer>(Collections.nCopies(12, 0));
-        int current_month = input.get(0).getDate().getMonth();
-        Log.i(Constants.TAG, "getGamesPerDay: current month" + current_month);
-        for(MatchListData matchListData : input){
-            int month = matchListData.getDate().getMinutes();
-            int day = matchListData.getDate().getDay();
-            Log.i(Constants.TAG, "getGamesPerDay: " + day);
-            if(month == current_month){
-                int last_value = al.get(day);
-                last_value++;
-                al.set(day, last_value);
-            }
+        ArrayList<Integer> frequencies = new ArrayList<Integer>();
+        ArrayList<Date> dates = getDates(input);
+        SparseArray<Integer> frequency = new SparseArray<>();
+        for(Date date : dates){ // loop over list of dates
+            Log.i(Constants.TAG, "getGamesPerDay: to string" + date.toString());
+            String[] date_array = getDateArray(date.toString());
+            int day = Integer.parseInt(date_array[2]);
+            Log.i(Constants.TAG, "getGamesPerDay: DAY "+day);
+            Integer prev = frequency.get(day, 0);
+            Log.i(Constants.TAG, "getGamesPerDay: PREV" + prev);
+            frequency.append(day, prev + 1);
         }
-        return al;
+        Log.i(Constants.TAG, "getGamesPerDay: FREQUENCY SIZEOF" + frequency.size());
+        for(int j = 0; j < frequency.size(); ++j){
+            int key = frequency.keyAt(j);
+            Integer in = frequency.get(key);
+            Log.i(Constants.TAG, "getGamesPerDay: "+in);
+            frequencies.add(in);
+        }
+        Log.i(Constants.TAG, "getGamesPerDay: SIZEOF" + frequencies.size());
+        return frequencies;
     }
+    private ArrayList<Date> getDates(ArrayList<MatchListData> matchListDataArrayList){
+        ArrayList<Date> dates = new ArrayList<>();
+        for(MatchListData matchListData : matchListDataArrayList){
+            dates.add(matchListData.getDate());
+        }
+        return dates;
+    }
+
+    private String[] getDateArray(String date){
+        StringTokenizer st = new StringTokenizer(date);
+        String[] date_array = new String[st.countTokens()];
+        int i = 0;
+//            date_array[0] = Wed
+//            date_array[1] = Jan
+//            date_array[2] = 20
+//            date_array[3] = 11:01:15
+//            date_array[4] = EST
+//            date_array[5] = 2016
+        while (st.hasMoreTokens()) {
+            date_array[i] = st.nextToken();
+            Log.i(Constants.TAG, "getGamesPerDay: "+date_array[i]);
+            i++;
+        }
+        return date_array;
+    }
+
     private BarDataSet r(ArrayList<Integer> al){
         ArrayList<BarEntry> entries = new ArrayList<>();
         int i = 0;
@@ -87,9 +114,9 @@ public class PlayerEffortFragment extends Fragment {
         return dataset;
     }
 
-    private ArrayList<String> labels(){
+    private ArrayList<String> labels(int n){
         ArrayList<String> labels = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < n; i++) {
             labels.add("Day "+i);
         }
         return labels;

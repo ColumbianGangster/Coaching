@@ -19,6 +19,7 @@ public class FeedbackLogic {
         intent.setType(EmailConstants.MESSAGE_TYPE);
         intent.putExtra(Intent.EXTRA_EMAIL, EmailConstants.DEVELOPER_EMAIL);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(Intent.createChooser(intent, EmailConstants.WELCOME_FEEDBACK_MSG ));
+        // TODO: 27/01/2016 sender intent compulsory 
+        context.startActivity(Intent.createChooser(intent, EmailConstants.WELCOME_FEEDBACK_MSG));
     }
 }

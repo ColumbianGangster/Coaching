@@ -18,6 +18,7 @@ import android.view.View;
 import com.example.taefinalproject1.R;
 import com.example.taefinalproject1.constants.Constants;
 import com.example.taefinalproject1.fragments.GalleryFragment;
+import com.example.taefinalproject1.fragments.LolKingFragment;
 import com.example.taefinalproject1.fragments.MatchListFragment;
 import com.example.taefinalproject1.fragments.PlayerEffortFragment;
 import com.example.taefinalproject1.fragments.ProBuildsFragment;
@@ -93,28 +94,28 @@ public class ParentActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 // TODO: 18/01/2016 Implement onNavigationItemSelected statements 
-        if (id == R.id.nav_challenger_players) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+//        if (id == R.id.nav_challenger_players) {
+//            // Handle the camera action
+        if (id == R.id.nav_gallery) {
             GalleryFragment galleryFragment = new GalleryFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_fragment_container, galleryFragment).commit();
-        } else if (id == R.id.nav_master_players) {
+//        } else if (id == R.id.nav_master_players) {
 
         } else if (id == R.id.nav_myteam) {
             Intent intent = new Intent(this, ScreenSlidePagerActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_player_effort) {
-            PlayerEffortFragment playerEffortFragment = new PlayerEffortFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_fragment_container, playerEffortFragment).commit();
-
+//        } else if (id == R.id.nav_player_effort) {
+//            PlayerEffortFragment playerEffortFragment = new PlayerEffortFragment();
+//            getSupportFragmentManager().beginTransaction()
+//                    .replace(R.id.main_fragment_container, playerEffortFragment).commit();
+//
         } else if (id == R.id.nav_probuilds) {
             ProBuildsFragment proBuildsFragment = new ProBuildsFragment();
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.main_fragment_container,proBuildsFragment).commit();
 
-        } else if (id == R.id.nav_recent_games){
+//        } else if (id == R.id.nav_recent_games){
 
         } else if (id == R.id.nav_team_builder){
             TeamBuilderFragment teamBuilderFragment = new TeamBuilderFragment();
@@ -147,7 +148,14 @@ public class ParentActivity extends AppCompatActivity
         playerEffortFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_fragment_container, playerEffortFragment).commit();
+    }
 
-
+    public void grid_item_web_view(String url){
+        LolKingFragment lolKingFragment = new LolKingFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("url", url);
+        lolKingFragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment_container, lolKingFragment).commit();
     }
 }

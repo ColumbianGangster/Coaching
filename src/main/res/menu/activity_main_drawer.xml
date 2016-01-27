@@ -12,26 +12,26 @@
             android:background="#00000000"
             android:title="Gallery" />
         <!--android:icon="@drawable/ic_menu_gallery"-->
-        <item
-            android:id="@+id/nav_master_players"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Master Players" />
-        <item
-            android:id="@+id/nav_challenger_players"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Challenger Players" />
-        <item
-            android:id="@+id/nav_recent_games"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Recent Games" />
+        <!--<item-->
+            <!--android:id="@+id/nav_master_players"-->
+            <!--android:icon="@drawable/ic_menu_slideshow"-->
+            <!--android:title="Master Players" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_challenger_players"-->
+            <!--android:icon="@drawable/ic_menu_slideshow"-->
+            <!--android:title="Challenger Players" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_recent_games"-->
+            <!--android:icon="@drawable/ic_menu_manage"-->
+            <!--android:title="Recent Games" />-->
         <item
             android:id="@+id/nav_probuilds"
             android:icon="@drawable/ic_menu_manage"
             android:title="Pro Builds" />
-        <item
-            android:id="@+id/nav_player_effort"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Player Effort Monitor" />
+        <!--<item-->
+            <!--android:id="@+id/nav_player_effort"-->
+            <!--android:icon="@drawable/ic_menu_manage"-->
+            <!--android:title="Player Effort Monitor" />-->
         <item
             android:id="@+id/nav_team_builder"
             android:icon="@drawable/ic_menu_manage"
